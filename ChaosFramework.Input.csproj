@@ -20,14 +20,24 @@
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' " />
 
   <!-- Included Files -->
+  <Import Project="submodules/ChaosPresets.Targets/StandardResources.targets" />
   <ItemGroup>
     <Compile Include="source\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+
+    <None Include="Resources\**\*.txt" />
+    <None Include="Resources\**\*.xml" />
   </ItemGroup>
 
   <!-- References -->
+  <Import Project="submodules/ChaosPresets.References/ProjectReferences/ChaosUtil.Debug.targets" />
+  <Import Project="submodules/ChaosPresets.References/ProjectReferences/ChaosUtil.Reflection.targets" />
+  <Import Project="submodules/ChaosPresets.References/ProjectReferences/ChaosUtil.Serialization.targets" />
+  <Import Project="submodules/ChaosPresets.References/ProjectReferences/ChaosFramework.Collections.targets" />
+  <Import Project="submodules/ChaosPresets.References/ProjectReferences/ChaosFramework.Core.targets" />
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 
   <!-- Analyzers -->

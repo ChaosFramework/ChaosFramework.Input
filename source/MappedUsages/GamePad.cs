@@ -1,0 +1,35 @@
+namespace ChaosFramework.Input.MappedUsages
+{
+    public enum GamePad
+    {
+        A,
+        B,
+        X,
+        Y,
+        LB,
+        RB,
+        Back,
+        Start,
+        L3,
+        R3,
+        DPad_Up,
+        DPad_UpRight,
+        DPad_Right,
+        DPad_DownRight,
+        DPad_Down,
+        DPad_DownLeft,
+        DPad_Left,
+        DPad_UpLeft,
+        LSX_Left,
+        LSX_Right,
+        LSY_Down,
+        LSY_Up,
+        RSX_Left,
+        RSX_Right,
+        RSY_Down,
+        RSY_Up,
+        LT,
+        RT,
+        Home
+    }
+}
