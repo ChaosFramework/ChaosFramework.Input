@@ -1,0 +1,34 @@
+<Layout type="GamePad">
+	<Axis hidUsageID="0009 0001" subIndex="00" usage="A"/>
+	<Axis hidUsageID="0009 0002" subIndex="00" usage="B"/>
+	<Axis hidUsageID="0009 0003" subIndex="00" usage="X"/>
+	<Axis hidUsageID="0009 0004" subIndex="00" usage="Y"/>
+	<Axis hidUsageID="0009 0005" subIndex="00" usage="LB"/>
+	<Axis hidUsageID="0009 0006" subIndex="00" usage="RB"/>
+	<Axis hidUsageID="0009 0007" subIndex="00" usage="Back"/>
+	<Axis hidUsageID="0009 0008" subIndex="00" usage="Start"/>
+	<Axis hidUsageID="0009 0009" subIndex="00" usage="L3"/>
+	<Axis hidUsageID="0009 000A" subIndex="00" usage="R3"/>
+
+	<Axis hidUsageID="0001 0039" subIndex="00" usage="DPad_Up"/>
+	<Axis hidUsageID="0001 0039" subIndex="01" usage="DPad_UpRight"/>
+	<Axis hidUsageID="0001 0039" subIndex="02" usage="DPad_Right"/>
+	<Axis hidUsageID="0001 0039" subIndex="03" usage="DPad_DownRight"/>
+	<Axis hidUsageID="0001 0039" subIndex="04" usage="DPad_Down"/>
+	<Axis hidUsageID="0001 0039" subIndex="05" usage="DPad_DownLeft"/>
+	<Axis hidUsageID="0001 0039" subIndex="06" usage="DPad_Left"/>
+	<Axis hidUsageID="0001 0039" subIndex="07" usage="DPad_UpLeft"/>
+
+	<Axis hidUsageID="0001 0030" subIndex="01" usage="LSX_Left"/>
+	<Axis hidUsageID="0001 0030" subIndex="00" usage="LSX_Right"/>
+	<Axis hidUsageID="0001 0031" subIndex="00" usage="LSY_Down"/>
+	<Axis hidUsageID="0001 0031" subIndex="01" usage="LSY_Up"/>
+
+	<Axis hidUsageID="0001 0032" subIndex="00" usage="LT"/>
+	<Axis hidUsageID="0001 0032" subIndex="01" usage="RT"/>
+
+	<Axis hidUsageID="0001 0033" subIndex="01" usage="RSX_Left"/>
+	<Axis hidUsageID="0001 0033" subIndex="00" usage="RSX_Right"/>
+	<Axis hidUsageID="0001 0034" subIndex="00" usage="RSY_Down"/>
+	<Axis hidUsageID="0001 0034" subIndex="01" usage="RSY_Up"/>
+</Layout>

@@ -1,0 +1,38 @@
+namespace ChaosFramework.Input.MappedUsages
+{
+    public enum FlightControls
+    {
+        LeanForward,
+        LeanBackward,
+        LeanLeft,
+        LeanRight,
+        RollLeft,
+        RollRight,
+        ThrottlePositive,
+        ThrottleNegative,
+        Button01,
+        Button02,
+        Button03,
+        Button04,
+        Button05,
+        Button06,
+        Button07,
+        Button08,
+        Button09,
+        Button10,
+        Button11,
+        Button12,
+        Button13,
+        Button14,
+        Button15,
+        Button16,
+        HatUp,
+        HatUpRight,
+        HatRight,
+        HatDownRight,
+        HatDown,
+        HatDownLeft,
+        HatLeft,
+        HatUpLeft,
+    }
+}

@@ -1,0 +1,39 @@
+<Layout type="FlightControls">
+	<Axis hidUsageID="0009 0001" subIndex="00" usage="Button01"/>
+	<Axis hidUsageID="0009 0002" subIndex="00" usage="Button02"/>
+	<Axis hidUsageID="0009 0003" subIndex="00" usage="Button03"/>
+	<Axis hidUsageID="0009 0004" subIndex="00" usage="Button04"/>
+	<Axis hidUsageID="0009 0005" subIndex="00" usage="Button05"/>
+	<Axis hidUsageID="0009 0006" subIndex="00" usage="Button06"/>
+	<Axis hidUsageID="0009 0007" subIndex="00" usage="Button07"/>
+	<Axis hidUsageID="0009 0008" subIndex="00" usage="Button08"/>
+	<Axis hidUsageID="0009 0009" subIndex="00" usage="Button09"/>
+	<Axis hidUsageID="0009 000A" subIndex="00" usage="Button10"/>
+	<Axis hidUsageID="0009 000B" subIndex="00" usage="Button11"/>
+	<Axis hidUsageID="0009 000C" subIndex="00" usage="Button12"/>
+	<Axis hidUsageID="0009 000D" subIndex="00" usage="Button13"/>
+	<Axis hidUsageID="0009 000E" subIndex="00" usage="Button14"/>
+	<Axis hidUsageID="0009 000F" subIndex="00" usage="Button15"/>
+	<Axis hidUsageID="0009 0010" subIndex="00" usage="Button16"/>
+
+	<Axis hidUsageID="0001 0030" subIndex="00" usage="LeanRight"/>
+	<Axis hidUsageID="0001 0030" subIndex="01" usage="LeanLeft"/>
+	<Axis hidUsageID="0001 0031" subIndex="00" usage="LeanBackward"/>
+	<Axis hidUsageID="0001 0031" subIndex="01" usage="LeanForward"/>
+	
+	<Axis hidUsageID="0001 0035" subIndex="00" usage="RollRight"/> 
+	<Axis hidUsageID="0001 0035" subIndex="01" usage="RollLeft"/>
+	
+	<Axis hidUsageID="0001 0036" subIndex="00" usage="ThrottleNegative"/> 
+	<Axis hidUsageID="0001 0036" subIndex="01" usage="ThrottlePositive"/>
+
+	<Axis hidUsageID="0001 0039" subIndex="00" usage="HatUp"/>
+	<Axis hidUsageID="0001 0039" subIndex="01" usage="HatUpRight"/>
+	<Axis hidUsageID="0001 0039" subIndex="02" usage="HatRight"/>
+	<Axis hidUsageID="0001 0039" subIndex="03" usage="HatDownRight"/>
+	<Axis hidUsageID="0001 0039" subIndex="04" usage="HatDown"/>
+	<Axis hidUsageID="0001 0039" subIndex="05" usage="HatDownLeft"/>
+	<Axis hidUsageID="0001 0039" subIndex="06" usage="HatLeft"/>
+	<Axis hidUsageID="0001 0039" subIndex="07" usage="HatUpLeft"/>
+	
+</Layout>
