@@ -46,6 +46,7 @@ namespace ChaosFramework.Input
             where AxisType : InputAxis
             where EventType : InputEvent<AxisType>
         {
+            AssertAlive();
             Delegate instance = handler;
             eventTypes[instance] = typeof(EventType);
             inputLayers[(int)(Dummy)layer].Add(instance);
@@ -55,16 +56,23 @@ namespace ChaosFramework.Input
             where AxisType : InputAxis
             where EventType : InputEvent<AxisType>
         {
+            AssertAlive();
             Delegate instance = handler;
             eventTypes[instance] = typeof(EventType);
             inputLayers[(int)(Dummy)layer].Insert(0, instance);
         }
 
         public void AddHandler(Enum layer, Func<InputEvent, bool> handler)
-            => inputLayers[(int)(Dummy)layer].Add(handler);
+        {
+            AssertAlive();
+            inputLayers[(int)(Dummy)layer].Add(handler);
+        }
 
         public void PrependHandler(Enum layer, Func<InputEvent, bool> handler)
-            => inputLayers[(int)(Dummy)layer].Insert(0, handler);
+        {
+            AssertAlive();
+            inputLayers[(int)(Dummy)layer].Insert(0, handler);
+        }
 
         protected internal void AddEvent(InputEvent e)
         {
