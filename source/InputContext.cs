@@ -192,6 +192,9 @@ namespace ChaosFramework.Input
         {
             base.DoDispose();
             updateThread.Join();
+            foreach (AdvancedLinkedList<Delegate> layer in inputLayers)
+                layer.Clear();
+            eventTypes.Clear();
         }
     }
 }
