@@ -1,13 +1,7 @@
 namespace ChaosFramework.Input.InputEvents
 {
-    public class InputPushEvent<Axis>
-        : InputEvent<Axis>
+    public class InputPushEvent<Axis>(Axis axis, InputChange change)
+        : InputEvent<Axis, InputChange>(axis, change)
         where Axis : InputAxis
-    {
-        public override EventType type => EventType.Push;
-
-        public InputPushEvent(Axis axis, float oldValue, float newValue)
-            : base(axis, oldValue, newValue)
-        { }
-    }
+        ;
 }

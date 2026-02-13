@@ -1,40 +1,32 @@
+using ChaosAnalyzers.ClassIntegrity;
+
 namespace ChaosFramework.Input
 {
-    public abstract class InputEvent
+    public struct InputChange(float oldValue, float newValue)
     {
-        public enum EventType
-        {
-            ChangeOnly,
-            Push,
-            Repeat,
-            Release,
-        }
-
-        public readonly float oldValue, newValue;
-        public readonly InputAxis axis;
-
-        public abstract EventType type { get; }
-
-        public bool consumed => axis.consumed;
-
-        protected InputEvent(InputAxis axis, float oldValue, float newValue)
-        {
-            this.axis = axis;
-            this.oldValue = oldValue;
-            this.newValue = newValue;
-        }
+        public readonly float oldValue = oldValue;
+        public readonly float newValue = newValue;
     }
 
-    public abstract class InputEvent<Axis>
+    public abstract class InputEvent
+    {
+        internal abstract object dataInternal {get;}
+        internal abstract InputAxis axisInternal {get;}
+
+        public bool consumed => axisInternal.consumed;
+
+        private protected InputEvent() {}
+    }
+
+    [method: ExplicitConstructor(applyToAbstractClasses: false)]
+    public abstract class InputEvent<Axis, Data>(Axis axis, Data data)
         : InputEvent
         where Axis : InputAxis
     {
-        public new readonly Axis axis;
+        public readonly Axis axis = axis;
+        public readonly Data data = data;
 
-        public InputEvent(Axis axis, float oldValue, float newValue)
-            : base(axis, oldValue, newValue)
-        {
-            this.axis = axis;
-        }
+        internal override sealed InputAxis axisInternal => axis;
+        internal override sealed object dataInternal => data;
     }
 }

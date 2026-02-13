@@ -2,6 +2,7 @@
 <Project>
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <LangVersion>12.0</LangVersion>
     <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
   </PropertyGroup>
 
