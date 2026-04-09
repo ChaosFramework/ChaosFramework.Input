@@ -4,7 +4,8 @@ namespace ChaosFramework.Input
     {
         /// <summary> The HID usage as defined in page 0x07. </summary>
         /// <seealso href="https://www.usb.org/sites/default/files/hut17.pdf#chapter.10"/>
-        public enum HidUsage : ushort
+        public enum HidUsage
+            : ushort
         {
             /// <summary>Keyboard ErrorRollOver</summary>
             ErrorRollOver = 0x0001,
@@ -253,6 +254,9 @@ namespace ChaosFramework.Input
             AltRight = 0x00E6,
             GuiRight = 0x00E7,
             // E8-FFFF RESERVED
+
+            /// <summary> Reflects a key that is not defined in HID or whose mapping is unknown. </summary>
+            Unknown = 0xFFFF,
         }
     }
 }

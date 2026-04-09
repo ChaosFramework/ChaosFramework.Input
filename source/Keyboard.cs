@@ -5,23 +5,21 @@ namespace ChaosFramework.Input
     public abstract partial class Keyboard
         : InputDevice
     {
-        public const HidPage HID_PAGE = HidPage.Keyboard;
+        public Key this[HidUsage key]
+            => keys.TryGetValue(key, out Key result) ? result : keys[key] = GenerateKey(key);
 
-        SysCol.Dictionary<HidUsage, Key> pressed = new SysCol.Dictionary<HidUsage, Key>();
-
-        public InputAxis this[HidUsage key] => this[(uint)key].first;
+        SysCol.Dictionary<HidUsage, Key> keys = [];
 
         public Keyboard(InputContext parent)
             : base(parent)
         {
             foreach (HidUsage keyCode in new SysCol.HashSet<HidUsage>(ChaosUtil.Reflection.Enum<HidUsage>.GetValues()))
-            {
-                Key key = GenerateKey(keyCode);
-                AddAxis((uint)keyCode, key);
-                pressed[keyCode] = key;
-            }
+                keys[keyCode] = GenerateKey(keyCode);
         }
 
         protected abstract Key GenerateKey(HidUsage hidUsage);
+
+        public override sealed SysCol.IEnumerator<InputAxis> GetEnumerator()
+            => keys.Values.GetEnumerator();
     }
 }

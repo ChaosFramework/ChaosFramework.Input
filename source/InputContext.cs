@@ -15,14 +15,16 @@ namespace ChaosFramework.Input
 
         public readonly LayoutManager layoutMgr;
 
+        readonly object queueLock = new object();
+
         readonly int numLayers;
 
-        readonly LinkedList<InputDevice> allDevices = new LinkedList<InputDevice>();
+        readonly LinkedList<InputDevice> allDevices = [];
         readonly Thread updateThread;
-        readonly AutoResetEvent initEvent = new AutoResetEvent(false);
+        readonly AutoResetEvent initEvent = new(false);
 
-        LinkedList<InputEvent> queuedEvents = new LinkedList<InputEvent>();
-        Func<InputContext, InputDeviceHost> getOrCreateHost;
+        LinkedList<InputEvent> queuedEvents = new();
+        readonly Func<InputContext, InputDeviceHost> getOrCreateHost;
         InputDeviceHost deviceHost;
 
         /// <summary>
@@ -32,7 +34,7 @@ namespace ChaosFramework.Input
         ///         <item>V: The handler.</item>
         ///     </list>
         /// </summary>
-        SysCol.Dictionary<Type, SysCol.Dictionary<Type, LinkedList<Delegate>[]>> eventTypeHandlers = new();
+        readonly SysCol.Dictionary<Type, SysCol.Dictionary<Type, LinkedList<Delegate>[]>> eventTypeHandlers = [];
 
         public InputContext(Type consumeLayerEnum, Func<InputContext, InputDeviceHost> getOrCreateHost)
         {
@@ -46,11 +48,6 @@ namespace ChaosFramework.Input
             updateThread = new Thread(InputThread);
             updateThread.Start();
             initEvent.WaitOne();
-        }
-
-        void Register<EventType, AxisType, EventData>(Enum layer, Func<EventType, bool> handler)
-            where EventType : InputEvent
-        {
         }
 
         public void AddHandler<EventType, AxisType, EventData>(Enum layer, Func<EventType, bool> handler)
@@ -67,15 +64,16 @@ namespace ChaosFramework.Input
 
             SysCol.Dictionary<Type, LinkedList<Delegate>[]> handlers
                 = eventTypeHandlers.GetOrCreateValue(evtType.GetGenericTypeDefinition());
+
             if (!handlers.TryGetValue(axisType, out LinkedList<Delegate>[] layers))
                 handlers[axisType] = layers = new LinkedList<Delegate>[numLayers];
 
-            (layers[(int)(Dummy)layer] ??= []).Add(handler);
+            (layers[(int)(Dummy)layer] ?? (layers[(int)(Dummy)layer] = new LinkedList<Delegate>())).Add(handler);
         }
 
         protected internal void AddEvent(InputEvent e)
         {
-            lock (queuedEvents)
+            lock (queueLock)
                 queuedEvents.Add(e);
         }
 
@@ -84,18 +82,15 @@ namespace ChaosFramework.Input
             MeasurementLog.StartMeasure("Update InputDevice List");
             lock (updateThread)
             {
-                foreach (InputDevice dev in deviceHost)
-                    allDevices.Remove(dev);
-
-                deviceHost.RefreshDeviceList();
-                allDevices.Add(deviceHost);
+                allDevices.Clear();
+                allDevices.Add(deviceHost.RefreshDeviceList());
             }
             MeasurementLog.EndMeasure();
         }
 
         Type GetSpecializedEventTypeDefinition(Type t)
         {
-            while(t != null)
+            while (t != null)
             {
                 Type baseType = t.BaseType;
                 if (baseType == null)
@@ -113,18 +108,29 @@ namespace ChaosFramework.Input
         MeasurementLog.CustomAttribute[] NumDevicesCustomAttr(double t)
             => [new MeasurementLog.CustomAttribute("Number of Devices", allDevices.length.ToString())];
 
-        public void UpdateInputConsumption(bool updateDevices = true)
+        /// <summary>
+        ///     Processes all events that have been raised since the previous call to this function
+        ///     and optionally updates the consistent state of all devices.
+        /// </summary>
+        /// <param name="updateDeviceState"> Whether to update device state. </param>
+        /// <remarks>
+        ///     "Consistent state" implies
+        ///     that all inquiries of <see cref="InputAxis.value"/> and dependent properties shall yield identical results
+        ///     between two calls of <see cref="UpdateInputConsumption(bool)"/>
+        ///     with <paramref name="updateDeviceState"/> == <see langword="true"/>.
+        /// </remarks>
+        public void UpdateInputConsumption(bool updateDeviceState = true)
         {
             MeasurementLog.StartMeasure(nameof(UpdateInputConsumption));
             LinkedList<InputEvent> events;
-            lock (queuedEvents)
+            lock (queueLock)
             {
                 MeasurementLog.StartMeasure("Device Update");
                 events = queuedEvents;
                 queuedEvents = new LinkedList<InputEvent>();
-                if (updateDevices)
+                if (updateDeviceState)
                     foreach (InputDevice dev in EnumerateDevices())
-                        dev.Update();
+                        dev.AdvanceFrame();
 
                 MeasurementLog.EndMeasure(NumDevicesCustomAttr);
             }
@@ -136,13 +142,12 @@ namespace ChaosFramework.Input
                 Type specializedEventType = GetSpecializedEventTypeDefinition(e.GetType());
                 Type unboundEventType = specializedEventType.GetGenericTypeDefinition();
 
-                if(eventTypeHandlers.TryGetValue(unboundEventType, out SysCol.Dictionary<Type, LinkedList<Delegate>[]> matchingAxes))
+                if (eventTypeHandlers.TryGetValue(unboundEventType, out SysCol.Dictionary<Type, LinkedList<Delegate>[]> matchingAxes))
                 {
-                    e.axisInternal.consumed = false;
                     Type raisedAxis = specializedEventType.BaseType.GetGenericArguments()[0];
-                    for(Type handledAxis = raisedAxis; handledAxis != typeof(object); handledAxis = handledAxis.BaseType)
+                    for (Type handledAxis = raisedAxis; handledAxis != typeof(object); handledAxis = handledAxis.BaseType)
                         if (matchingAxes.TryGetValue(handledAxis, out LinkedList<Delegate>[] concreteAxisHandlers))
-                            foreach(LinkedList<Delegate> inputLayer in concreteAxisHandlers)
+                            foreach (LinkedList<Delegate> inputLayer in concreteAxisHandlers)
                             {
                                 // TODO: support currying further type arguments
                                 InputEvent handledEvent = (InputEvent)Activator.CreateInstance(
@@ -150,20 +155,18 @@ namespace ChaosFramework.Input
                                     [e.axisInternal, e.dataInternal]
                                     );
 
-                                foreach(Delegate handler in inputLayer)
-                                    try
-                                    {
-                                        MeasurementLog.StartMeasure($"Handler '{handler}'");
-                                        if ((bool)handler.DynamicInvoke(handledEvent))
+                                if (inputLayer != null)
+                                    foreach (Delegate handler in inputLayer)
+                                        try
                                         {
-                                            e.axisInternal.consumed = true;
-                                            goto consumed;
+                                            MeasurementLog.StartMeasure($"Handler '{handler}'");
+                                            if ((bool)handler.DynamicInvoke(handledEvent))
+                                                goto consumed;
                                         }
-                                    }
-                                    finally
-                                    {
-                                        MeasurementLog.EndMeasure();
-                                    }
+                                        finally
+                                        {
+                                            MeasurementLog.EndMeasure();
+                                        }
                             }
                 }
             consumed:;
@@ -201,24 +204,6 @@ namespace ChaosFramework.Input
 
             return null;
         }
-
-        public LinkedList<InputAxis> GetAxis<DeviceType>(uint axisID)
-        {
-            LinkedList<InputAxis> axes = new LinkedList<InputAxis>();
-            foreach (InputDevice device in EnumerateDevices())
-                axes.Add(device[axisID]);
-
-            return axes;
-        }
-
-        public float GetValue<DeviceType>(uint axisID)
-            => GetAxis<DeviceType>(axisID).Select(InputAxis.SelectValue).Max();
-
-        public bool WasActivated<DeviceType>(uint axisID, float threshold = 0.5f)
-            => GetAxis<DeviceType>(axisID).Any(threshold, InputAxis.WasActivated);
-
-        public bool WasReleased<DeviceType>(uint axisID, float threshold = 0.5f)
-          => GetAxis<DeviceType>(axisID).Any(threshold, InputAxis.WasReleased);
 
         public SysCol.IEnumerable<InputDevice> EnumerateDevices()
             => allDevices.Select(Linq.SelectIdentity);

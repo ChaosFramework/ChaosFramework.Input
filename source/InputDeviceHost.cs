@@ -1,11 +1,10 @@
-using System.Collections.Generic;
+using SysCol = System.Collections.Generic;
 
 namespace ChaosFramework.Input
 {
     public interface InputDeviceHost
-        : IEnumerable<InputDevice>
     {
-        void RefreshDeviceList();
+        SysCol.IEnumerable<InputDevice> RefreshDeviceList();
 
         void Update();
     }
