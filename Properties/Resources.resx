@@ -60,24 +60,27 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="HID_Layout_FlightControlStick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\layouts\hid_layout_flightcontrolstick.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>../Resources/Layouts/HID_Layout_FlightControlStick.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="HID_Layout_PS1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Layouts\HID_Layout_PS1.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>../Resources/Layouts/HID_Layout_PS1.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="HID_Layout_PS4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\layouts\hid_layout_ps4.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>../Resources/Layouts/HID_Layout_PS4.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="HID_Layout_XBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Layouts\HID_Layout_XBox.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>../Resources/Layouts/HID_Layout_XBox.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="HID_Layout_XBox360" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Layouts\HID_Layout_XBox360.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>../Resources/Layouts/HID_Layout_XBox360.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="HID_Layout_XBoxOne" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Layouts\HID_Layout_XBoxOne.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>../Resources/Layouts/HID_Layout_XBoxOne.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="KeyboardLayoutIDs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\KeyboardLayoutIDs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>../Resources/KeyboardLayoutIDs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="KeyboardLayouts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>../Resources/KeyboardLayouts.xml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

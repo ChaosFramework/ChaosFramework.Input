@@ -1,40 +1,40 @@
+using ChaosAnalyzers.ClassIntegrity;
+
 namespace ChaosFramework.Input
 {
-    public abstract class InputEvent
+    public readonly struct InputChange(float oldValue, float newValue)
     {
-        public enum EventType
-        {
-            ChangeOnly,
-            Push,
-            Repeat,
-            Release,
-        }
+        public readonly float oldValue = oldValue;
+        public readonly float newValue = newValue;
 
-        public readonly float oldValue, newValue;
-        public readonly InputAxis axis;
+        /// <summary> Returns whether this axis exceeded a given threshold during the change. </summary>
+        /// <param name="threshold"> Axis is considered pressed when its value is greater or equal to <paramref name="threshold"/>. </param>
+        public readonly bool WasActivated(float threshold = 0.5f)
+            => oldValue < threshold && newValue >= threshold;
 
-        public abstract EventType type { get; }
-
-        public bool consumed => axis.consumed;
-
-        protected InputEvent(InputAxis axis, float oldValue, float newValue)
-        {
-            this.axis = axis;
-            this.oldValue = oldValue;
-            this.newValue = newValue;
-        }
+        /// <summary> Returns whether this axis fell below a given threshold during the change. </summary>
+        /// <param name="threshold"> Axis is considered released when its value is lower than <paramref name="threshold"/>. </param>
+        public readonly bool WasReleased(float threshold = 0.5f)
+            => oldValue >= threshold && newValue < threshold;
     }
 
-    public abstract class InputEvent<Axis>
+    public abstract class InputEvent
+    {
+        internal abstract object dataInternal {get;}
+        internal abstract InputAxis axisInternal {get;}
+
+        private protected InputEvent() {}
+    }
+
+    [method: ExplicitConstructor(applyToAbstractClasses: false)]
+    public abstract class InputEvent<Axis, Data>(Axis axis, Data data)
         : InputEvent
         where Axis : InputAxis
     {
-        public new readonly Axis axis;
+        public readonly Axis axis = axis;
+        public readonly Data data = data;
 
-        public InputEvent(Axis axis, float oldValue, float newValue)
-            : base(axis, oldValue, newValue)
-        {
-            this.axis = axis;
-        }
+        internal override sealed InputAxis axisInternal => axis;
+        internal override sealed object dataInternal => data;
     }
 }
