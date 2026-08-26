@@ -52,7 +52,7 @@
 			<Key key="D9" char="9"/>
 			<Key key="Keypad9" char="9"/>
 			<Key key="Space" char=" "/>
-			<Key key="Return" char="&#xA;"/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 			<Key key="Grave" char="^"/>
