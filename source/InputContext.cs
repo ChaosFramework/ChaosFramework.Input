@@ -8,6 +8,7 @@ using SysCol = System.Collections.Generic;
 namespace ChaosFramework.Input
 {
     using Layouts;
+    using HandlerStack = AdvancedLinkedList<Delegate>;
 
     public class InputContext : Core.Disposable
     {
@@ -31,10 +32,10 @@ namespace ChaosFramework.Input
         ///     <list type="bullet">
         ///         <item>K1: Generic type definition of event.</item>
         ///         <item>K2: Concrete specialization of handled event type.</item>
-        ///         <item>V: The handler.</item>
+        ///         <item>V: The handler stack.</item>
         ///     </list>
         /// </summary>
-        readonly SysCol.Dictionary<Type, SysCol.Dictionary<Type, LinkedList<Delegate>[]>> eventTypeHandlers = [];
+        readonly SysCol.Dictionary<Type, SysCol.Dictionary<Type, HandlerStack[]>> eventTypeHandlers = [];
 
         public InputContext(Type consumeLayerEnum, Func<InputContext, InputDeviceHost> getOrCreateHost)
         {
@@ -62,13 +63,13 @@ namespace ChaosFramework.Input
             if (axisType == null)
                 throw new ArgumentException($"{typeof(EventType)} must accept its {nameof(AxisType)} as first type argument.");
 
-            SysCol.Dictionary<Type, LinkedList<Delegate>[]> handlers
+            SysCol.Dictionary<Type, HandlerStack[]> handlers
                 = eventTypeHandlers.GetOrCreateValue(evtType.GetGenericTypeDefinition());
 
-            if (!handlers.TryGetValue(axisType, out LinkedList<Delegate>[] layers))
-                handlers[axisType] = layers = new LinkedList<Delegate>[numLayers];
+            if (!handlers.TryGetValue(axisType, out HandlerStack[] layers))
+                handlers[axisType] = layers = new HandlerStack[numLayers];
 
-            (layers[(int)(Dummy)layer] ?? (layers[(int)(Dummy)layer] = new LinkedList<Delegate>())).Add(handler);
+            (layers[(int)(Dummy)layer] ?? (layers[(int)(Dummy)layer] = new HandlerStack())).Add(handler);
         }
 
         protected internal void AddEvent(InputEvent e)
@@ -142,12 +143,12 @@ namespace ChaosFramework.Input
                 Type specializedEventType = GetSpecializedEventTypeDefinition(e.GetType());
                 Type unboundEventType = specializedEventType.GetGenericTypeDefinition();
 
-                if (eventTypeHandlers.TryGetValue(unboundEventType, out SysCol.Dictionary<Type, LinkedList<Delegate>[]> matchingAxes))
+                if (eventTypeHandlers.TryGetValue(unboundEventType, out SysCol.Dictionary<Type, HandlerStack[]> matchingAxes))
                 {
                     Type raisedAxis = specializedEventType.BaseType.GetGenericArguments()[0];
                     for (Type handledAxis = raisedAxis; handledAxis != typeof(object); handledAxis = handledAxis.BaseType)
-                        if (matchingAxes.TryGetValue(handledAxis, out LinkedList<Delegate>[] concreteAxisHandlers))
-                            foreach (LinkedList<Delegate> inputLayer in concreteAxisHandlers)
+                        if (matchingAxes.TryGetValue(handledAxis, out HandlerStack[] concreteAxisHandlers))
+                            foreach (HandlerStack inputLayer in concreteAxisHandlers)
                             {
                                 // TODO: support currying further type arguments
                                 InputEvent handledEvent = (InputEvent)Activator.CreateInstance(
@@ -156,6 +157,8 @@ namespace ChaosFramework.Input
                                     );
 
                                 if (inputLayer != null)
+                                {
+                                    inputLayer.SetEnumerator(inputLayer.length - 1, -inputLayer.length);
                                     foreach (Delegate handler in inputLayer)
                                         try
                                         {
@@ -167,6 +170,7 @@ namespace ChaosFramework.Input
                                         {
                                             MeasurementLog.EndMeasure();
                                         }
+                                }
                             }
                 }
             consumed:;
