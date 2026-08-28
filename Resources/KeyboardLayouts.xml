@@ -53,6 +53,7 @@
 			<Key key="Keypad9" char="9"/>
 			<Key key="Space" char=" "/>
 			<Key key="Enter" char="&#xA;"/>
+			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 			<Key key="Grave" char="^"/>
@@ -101,6 +102,7 @@
 			<Key key="Semicolon" char="Ö"/>
 			<Key key="LeftBracket" char="Ü"/>
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
@@ -126,18 +128,21 @@
 		</Modifier>
 		<Modifier id="Alt">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="Shift|Alt">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="AltGr">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
@@ -156,36 +161,42 @@
 		</Modifier>
 		<Modifier id="Shift|AltGr">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="Alt|AltGr">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="Shift|Alt|AltGr">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="Ctrl">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="Shift|Ctrl">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="Alt|Ctrl">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
@@ -193,30 +204,35 @@
 		</Modifier>
 		<Modifier id="Shift|Alt|Ctrl">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="AltGr|Ctrl">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="Shift|AltGr|Ctrl">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="Alt|AltGr|Ctrl">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
 		</Modifier>
 		<Modifier id="Shift|Alt|AltGr|Ctrl">
 			<Key key="Space" char=" "/>
+			<Key key="Enter" char="&#xA;"/>
 			<Key key="Return" char="&#xA;"/>
 			<Key key="KeypadEnter" char="&#xA;"/>
 			<Key key="Backspace" char="&#x8;"/>
